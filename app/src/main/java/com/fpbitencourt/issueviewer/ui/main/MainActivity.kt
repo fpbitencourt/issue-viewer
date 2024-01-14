@@ -38,12 +38,18 @@ class MainActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel.issues.observe(this) { issues ->
             (binding.recyclerView.adapter as? IssueListAdapter)?.setIssues(issues)
-            binding.progressBar.visibility = View.GONE
         }
 
         viewModel.errorEvent.observe(this) {
             showMessage(getString(R.string.error_message))
-            binding.progressBar.visibility = View.GONE
+        }
+
+        viewModel.loadingIssues.observe(this) { isLoading ->
+            if (isLoading) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
         }
 
         viewModel.defaultRepositoryUrl.observe(this) { defaultValue ->
@@ -55,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         binding.buttonSearch.setOnClickListener {
             val searchTerm = binding.editTextSearch.text.toString().trim()
             if (searchTerm.isNotEmpty()) {
-                binding.progressBar.visibility = View.VISIBLE
                 viewModel.loadIssues(searchTerm)
             }
         }

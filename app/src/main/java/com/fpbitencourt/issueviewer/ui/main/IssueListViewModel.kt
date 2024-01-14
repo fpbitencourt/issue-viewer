@@ -18,6 +18,9 @@ class IssueListViewModel : ViewModel() {
     private val _issues = MutableLiveData<List<Issue>>()
     val issues: LiveData<List<Issue>> get() = _issues
 
+    private val _loadingIssues = MutableLiveData<Boolean>()
+    val loadingIssues: LiveData<Boolean> get() = _loadingIssues
+
     private val _errorEvent = MutableLiveData<String>()
     val errorEvent: LiveData<String> get() = _errorEvent
 
@@ -31,11 +34,13 @@ class IssueListViewModel : ViewModel() {
     }
 
     fun loadIssues(url: String) {
+        _loadingIssues.value = true
         repository.getIssues(url)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ issues ->
                 _issues.value = issues
+                _loadingIssues.value = false
             }, { error ->
                 handleError(error)
             })
