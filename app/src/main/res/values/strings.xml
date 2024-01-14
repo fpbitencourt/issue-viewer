@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">IssueViewer</string>
+    <string name="error_message">Erro ao carregar a lista. Tente novamente mais tarde.</string>
+    <string name="open_in_browser">Abrir no Navegador</string>
+    <string name="repository_url">Url do Repositório</string>
+    <string name="list">Listar</string>
+    <string name="state_content_desc">Estado da issue</string>
+    <string name="user_avatar_content_desc">Avatar do usuário</string>
+    <string name="main_activity_issues">Issues</string>
+</resources>
